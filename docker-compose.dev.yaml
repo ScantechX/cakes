@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  cakes_frontend_dev:
+    stdin_open: true
+    container_name: cakes_frontend_dev
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - "./frontend:/app"
+      - "/app/node_modules"
+    ports:
+      - 3000:3000
+
+  strapi_dev:
+    image: strapi/strapi
+    environment:
+      DATABASE_CLIENT: mongo
+      DATABASE_NAME: strapi
+      DATABASE_HOST: mongo
+      DATABASE_PORT: 27017
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: strapi
+    links:
+      - mongo:mongo
+    volumes:
+      - ./app:/srv/app
+    ports:
+      - "1337:1337"
+
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: strapi
+      MONGO_INITDB_ROOT_PASSWORD: strapi
+    volumes:
+      - ./data/db:/app/data/db
+    ports:
+      - "27017:27017"

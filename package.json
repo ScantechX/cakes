@@ -1,0 +1,12 @@
+{
+  "name": "cakes_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:frontend": "docker-compose -f docker-compose.dev.yaml up --build",
+    "build:frontend": "docker-compose -f docker-compose.prod.yaml up --build"
+  },
+  "author": "",
+  "license": "ISC"
+}
